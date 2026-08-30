@@ -20,6 +20,11 @@ export function Hero() {
             className="flex items-center gap-3"
             style={{ animation: "rise 900ms cubic-bezier(0.22,1,0.36,1) both" }}
           >
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
+            </span>
+            <p className="label">Open to internships · 2026</p>
             <span className="h-px w-8 bg-border-strong" />
             <p className="label">
               {profile.role} · {profile.school}

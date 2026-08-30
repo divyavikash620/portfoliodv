@@ -326,7 +326,7 @@ export function HeroScene({ active = false }) {
       <directionalLight position={[-4, 1, -3]} intensity={0.5} color={colors.accent} />
       <Suspense fallback={null}>
         <Float speed={reduced ? 0 : 1} rotationIntensity={0.08} floatIntensity={reduced ? 0 : 0.25}>
-          <group scale={0.72} position={[0, -0.35, 0]}>
+          <group scale={0.86} position={[0, -0.55, 0]}>
             <Bot colors={colors} active={active} reduced={reduced || mobile} />
           </group>
         </Float>

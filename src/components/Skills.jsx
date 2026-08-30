@@ -11,7 +11,7 @@ export function Skills() {
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <Reveal>
-            <p className="label">Technical toolkit</p>
+            <p className="label">02 — Technical toolkit</p>
             <h2 className="mt-6 max-w-xl text-[clamp(2rem,4.5vw,3.4rem)] font-light leading-[1.05] tracking-[-0.03em] text-foreground">
               The tools I reach for, and what they built.
             </h2>

@@ -7,7 +7,7 @@ export function Certificates() {
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <div className="grid gap-12 lg:grid-cols-[0.6fr_1.4fr] lg:gap-20">
           <Reveal>
-            <p className="label">Archive</p>
+            <p className="label">05 — Archive</p>
             <h2 className="mt-6 text-[clamp(1.9rem,4vw,3rem)] font-light leading-[1.05] tracking-[-0.03em] text-foreground">
               Certificates
             </h2>

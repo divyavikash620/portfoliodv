@@ -12,7 +12,7 @@ export function Contact() {
     <section id="contact" className="ambient-bg grain relative border-t border-border py-28 md:py-44">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <Reveal>
-          <p className="label">Contact</p>
+          <p className="label">06 — Contact</p>
           <h2 className="mt-8 text-[clamp(2.6rem,9vw,7rem)] font-light leading-[0.92] tracking-[-0.045em] text-foreground">
             Let's build something
             <br />

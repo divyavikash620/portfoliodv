@@ -10,7 +10,7 @@ export function Projects() {
     <section id="work" className="relative border-t border-border py-24 md:py-36">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <Reveal className="max-w-3xl">
-          <p className="label">Selected work</p>
+          <p className="label">01 — Selected work</p>
           <h2 className="mt-6 text-[clamp(2.2rem,5.5vw,4.2rem)] font-light leading-[1.02] tracking-[-0.03em] text-foreground">
             Things I built to understand
             <br />
@@ -28,8 +28,14 @@ export function Projects() {
                 <button
                   key={p.id}
                   onClick={() => setActiveId(p.id)}
-                  className="group shrink-0 py-3 text-left lg:border-b lg:border-border"
+                  className="group relative shrink-0 py-3 pl-4 text-left lg:border-b lg:border-border"
                 >
+                  <span
+                    aria-hidden
+                    className={`absolute left-0 top-3 bottom-3 w-px origin-top bg-accent transition-transform duration-500 ${
+                      on ? "scale-y-100" : "scale-y-0"
+                    }`}
+                  />
                   <span className="label block">{p.number}</span>
                   <span
                     className={`mt-1 block text-lg font-light transition-colors ${

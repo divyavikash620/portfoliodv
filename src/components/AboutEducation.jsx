@@ -7,7 +7,7 @@ export function AboutEducation() {
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <div className="grid gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
           <Reveal>
-            <p className="label">About</p>
+            <p className="label">03 — About</p>
             <p className="mt-6 text-[clamp(1.3rem,2.6vw,1.9rem)] font-light leading-[1.35] tracking-[-0.02em] text-foreground">
               I'm a Computer Science student who prefers building the thing over reading about it.
             </p>
