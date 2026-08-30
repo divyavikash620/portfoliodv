@@ -17,14 +17,24 @@ export function Hero() {
       <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-10 px-6 pb-20 pt-28 md:px-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-6 lg:pb-28 lg:pt-40">
         <div className="relative z-10 flex flex-col justify-center">
           <div
-            className="flex items-center gap-3"
+            className="flex flex-col gap-3"
             style={{ animation: "rise 900ms cubic-bezier(0.22,1,0.36,1) both" }}
           >
-            <span className="h-px w-8 bg-border-strong" />
-            <p className="label">
-              {profile.role} · {profile.school}
-            </p>
+            <span className="flex w-fit items-center gap-2.5 border border-border-strong bg-surface/60 px-3 py-1.5 backdrop-blur-sm">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
+              </span>
+              <span className="label">Open to internships · 2026</span>
+            </span>
+            <div className="flex items-center gap-3">
+              <span className="h-px w-8 bg-border-strong" />
+              <p className="label">
+                {profile.role} · {profile.school}
+              </p>
+            </div>
           </div>
+
 
           <h1
             className="mt-8 text-[clamp(3.2rem,10vw,7.5rem)] font-light leading-[0.88] tracking-[-0.04em] text-foreground"

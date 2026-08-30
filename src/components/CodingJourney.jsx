@@ -6,7 +6,7 @@ export function CodingJourney() {
     <section id="coding" className="ambient-bg grain relative border-t border-border py-24 md:py-36">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <Reveal>
-          <p className="label">Coding journey</p>
+          <p className="label">04 — Coding journey</p>
           <h2 className="mt-6 max-w-2xl text-[clamp(2rem,4.5vw,3.4rem)] font-light leading-[1.05] tracking-[-0.03em] text-foreground">
             Problem solving, kept up daily.
           </h2>
