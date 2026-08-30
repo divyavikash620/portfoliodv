@@ -6,8 +6,8 @@ import { useTheme } from "./ThemeProvider.jsx";
 
 const palettes = {
   dark: {
-    plane: "#22221e",
-    edge: "#5c5a4f",
+    plane: "#3b3a33",
+    edge: "#7d7a6a",
     accent: "#a8a274",
     node: "#f2f0e9",
     light: "#fff4d6",
