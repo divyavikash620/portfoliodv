@@ -29,10 +29,9 @@ const palettes = {
     posterInk: "#24231d",
     posterAccent: "#7a6a34",
     light: "#fff6c8",
-    shadow: "#4a4staged",
+    shadow: "#4a4326",
   },
 };
-palettes.light.shadow = "#4a4326";
 
 function usePosterTexture(colors) {
   return useMemo(() => {
