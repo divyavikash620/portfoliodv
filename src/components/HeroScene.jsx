@@ -167,21 +167,21 @@ function Bot({ colors, active, reduced }) {
   );
 
   return (
-    <group ref={root} position={[0, 0, 0]}>
+    <group ref={root} position={[0, -0.25, 0]}>
       {/* poster held up above the head */}
-      <group ref={poster} position={[0, 0.16, 0.62]}>
-        <mesh position={[0, 1.62, 0]}>
-          <planeGeometry args={[2.5, 1.56]} />
+      <group ref={poster} position={[0, 0.16, 0.78]}>
+        <mesh position={[0, 2.02, 0]}>
+          <planeGeometry args={[2.4, 1.5]} />
           <meshStandardMaterial map={posterTex} roughness={0.85} metalness={0} side={THREE.DoubleSide} />
         </mesh>
-        <mesh position={[0, 1.62, -0.03]}>
-          <boxGeometry args={[2.6, 1.66, 0.05]} />
+        <mesh position={[0, 2.02, -0.03]}>
+          <boxGeometry args={[2.5, 1.6, 0.05]} />
           <meshStandardMaterial color={colors.joint} roughness={0.6} metalness={0.25} />
         </mesh>
         {/* holding rods */}
         {[-1.0, 1.0].map((x) => (
-          <mesh key={x} position={[x, 1.0, -0.02]} rotation={[0, 0, x > 0 ? -0.16 : 0.16]}>
-            <cylinderGeometry args={[0.035, 0.035, 1.0, 12]} />
+          <mesh key={x} position={[x, 1.22, -0.02]} rotation={[0, 0, x > 0 ? -0.16 : 0.16]}>
+            <cylinderGeometry args={[0.035, 0.035, 1.35, 12]} />
             <meshStandardMaterial color={colors.joint} roughness={0.5} metalness={0.4} />
           </mesh>
         ))}
@@ -310,7 +310,7 @@ export function HeroScene({ active = false }) {
     <Canvas
       className="!absolute inset-0"
       dpr={mobile ? 1 : [1, 1.6]}
-      camera={{ position: [0, 1.5, 5.6], fov: 42 }}
+      camera={{ position: [0, 1.35, 6.6], fov: 42 }}
       gl={{ antialias: !mobile, alpha: true }}
       shadows
     >
@@ -329,7 +329,7 @@ export function HeroScene({ active = false }) {
           <Bot colors={colors} active={active} reduced={reduced || mobile} />
         </Float>
         <ContactShadows
-          position={[0, -1.05, 0]}
+          position={[0, -1.28, 0]}
           opacity={theme === "dark" ? 0.5 : 0.3}
           scale={7}
           blur={2.6}
