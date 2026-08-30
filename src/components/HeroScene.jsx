@@ -170,18 +170,18 @@ function Bot({ colors, active, reduced }) {
     <group ref={root} position={[0, -0.25, 0]}>
       {/* poster held up above the head */}
       <group ref={poster} position={[0, 0.16, 0.78]}>
-        <mesh position={[0, 2.02, 0]}>
+        <mesh position={[0, 2.42, 0]}>
           <planeGeometry args={[2.4, 1.5]} />
           <meshStandardMaterial map={posterTex} roughness={0.85} metalness={0} side={THREE.DoubleSide} />
         </mesh>
-        <mesh position={[0, 2.02, -0.03]}>
+        <mesh position={[0, 2.42, -0.03]}>
           <boxGeometry args={[2.5, 1.6, 0.05]} />
           <meshStandardMaterial color={colors.joint} roughness={0.6} metalness={0.25} />
         </mesh>
         {/* holding rods */}
         {[-1.0, 1.0].map((x) => (
-          <mesh key={x} position={[x, 1.22, -0.02]} rotation={[0, 0, x > 0 ? -0.16 : 0.16]}>
-            <cylinderGeometry args={[0.035, 0.035, 1.35, 12]} />
+          <mesh key={x} position={[x, 1.5, -0.02]} rotation={[0, 0, x > 0 ? -0.16 : 0.16]}>
+            <cylinderGeometry args={[0.035, 0.035, 1.9, 12]} />
             <meshStandardMaterial color={colors.joint} roughness={0.5} metalness={0.4} />
           </mesh>
         ))}
@@ -326,7 +326,9 @@ export function HeroScene({ active = false }) {
       <directionalLight position={[-4, 1, -3]} intensity={0.5} color={colors.accent} />
       <Suspense fallback={null}>
         <Float speed={reduced ? 0 : 1} rotationIntensity={0.08} floatIntensity={reduced ? 0 : 0.25}>
-          <Bot colors={colors} active={active} reduced={reduced || mobile} />
+          <group scale={0.72} position={[0, -0.35, 0]}>
+            <Bot colors={colors} active={active} reduced={reduced || mobile} />
+          </group>
         </Float>
         <ContactShadows
           position={[0, -1.28, 0]}
