@@ -110,40 +110,29 @@ function Bot({ colors, active, reduced }) {
     const t = state.clock.elapsedTime;
     const p = state.pointer;
 
+    // No rotation anywhere — the bot only drifts gently and reacts by position.
     if (root.current) {
-      const ty = p.x * 0.45;
-      const tx = -p.y * 0.16;
-      root.current.rotation.y += (ty - root.current.rotation.y) * (1 - Math.exp(-2.4 * dt));
-      root.current.rotation.x += (tx - root.current.rotation.x) * (1 - Math.exp(-2.4 * dt));
-      const targetY = (reduced ? 0 : Math.sin(t * 1.1) * 0.07) + (active ? 0.12 : 0);
+      const tx = p.x * 0.22;
+      root.current.position.x += (tx - root.current.position.x) * (1 - Math.exp(-2.2 * dt));
+      const targetY = (reduced ? 0 : Math.sin(t * 1.1) * 0.05) + (active ? 0.1 : 0);
       root.current.position.y += (targetY - root.current.position.y) * (1 - Math.exp(-3 * dt));
-      const s = active ? 1.05 : 1;
+      const s = active ? 1.04 : 1;
       root.current.scale.x += (s - root.current.scale.x) * (1 - Math.exp(-3 * dt));
       root.current.scale.y = root.current.scale.z = root.current.scale.x;
     }
 
     if (head.current) {
-      const tilt = p.x * 0.25;
-      head.current.rotation.z += (-tilt * 0.4 - head.current.rotation.z) * (1 - Math.exp(-3 * dt));
-      head.current.rotation.y += (tilt - head.current.rotation.y) * (1 - Math.exp(-3 * dt));
-      head.current.position.y = 1.16 + (reduced ? 0 : Math.sin(t * 1.4) * 0.015);
+      head.current.position.y = 1.16 + (reduced ? 0 : Math.sin(t * 1.4) * 0.012);
     }
 
     if (poster.current) {
       const lift = active ? 0.08 : 0;
-      poster.current.rotation.x = -0.14 + (reduced ? 0 : Math.sin(t * 0.9) * 0.035);
       poster.current.position.y += (0.16 + lift - poster.current.position.y) * (1 - Math.exp(-3 * dt));
     }
 
-    // arm sway / little wave when the panel is open
     if (leftArm.current && rightArm.current) {
-      const sway = reduced ? 0 : Math.sin(t * 1.3) * 0.05;
-      leftArm.current.rotation.z = -0.95 + sway;
-      rightArm.current.rotation.z = 0.95 - sway;
-    }
-
-    if (antenna.current) {
-      antenna.current.rotation.z = reduced ? 0 : Math.sin(t * 2.2) * 0.12;
+      leftArm.current.rotation.z = -0.95;
+      rightArm.current.rotation.z = 0.95;
     }
 
     // blinking
