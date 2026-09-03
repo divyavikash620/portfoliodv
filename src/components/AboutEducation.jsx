@@ -12,9 +12,10 @@ export function AboutEducation() {
               I'm a Computer Science student who prefers building the thing over reading about it.
             </p>
             <p className="mt-6 max-w-md text-base leading-relaxed text-subtle">
-              Most of what I know came from writing small systems end to end — a database engine, a records
-              application, an analysis tool — and then finding out where they break. Right now I'm at Lovely
-              Professional University, solving problems daily and keeping the projects going.
+              Most of what I know came from writing small systems end to end — a database engine, a
+              records application, an analysis tool — and then finding out where they break. Right
+              now I'm at Lovely Professional University, solving problems daily and keeping the
+              projects going.
             </p>
             <div className="mt-10 flex gap-10">
               <div>

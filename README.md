@@ -72,14 +72,14 @@ Dark, warm, ambient, cinematic.
 
 Suggested palette:
 
-Background:        #11110f
-Deep background:   #0b0b09
-Surface:           #191916
-Surface elevated:  #22221e
+Background: #11110f
+Deep background: #0b0b09
+Surface: #191916
+Surface elevated: #22221e
 
-Primary text:      #f2f0e9
-Secondary text:    #aaa79e
-Muted text:        #716f68
+Primary text: #f2f0e9
+Secondary text: #aaa79e
+Muted text: #716f68
 
 Border:
 rgba(255,255,255,0.08)
@@ -110,13 +110,13 @@ Create a refreshing pale yellow / warm cream ambient aesthetic.
 
 Suggested direction:
 
-Background:       #f5f0d8
-Deep surface:     #ece4c4
-Surface:          #fffbea
+Background: #f5f0d8
+Deep surface: #ece4c4
+Surface: #fffbea
 
-Primary text:     #24231d
-Secondary text:   #656258
-Muted text:       #8a8575
+Primary text: #24231d
+Secondary text: #656258
+Muted text: #8a8575
 
 Accent:
 muted olive / warm brown / subtle mustard
@@ -215,7 +215,7 @@ Use this exact overall flow:
 8. Contact
 
 9. Footer
-IMPORTANT
+   IMPORTANT
 
 There is NO separate Achievement section.
 
@@ -507,8 +507,7 @@ Responsive dark/light themes
 Tech
 JavaScript
 CSS
-Gemini API
-11. PROJECT VISUAL DESIGN
+Gemini API 11. PROJECT VISUAL DESIGN
 
 Do NOT use a boring three-card grid.
 
@@ -663,7 +662,7 @@ Hovering JavaScript could reference WDTE.
 This creates actual relationships rather than meaningless skill bars.
 
 14. CODING JOURNEY SECTION — REPLACES ACHIEVEMENTS
-THERE MUST NOT BE A SECTION CALLED ACHIEVEMENTS.
+    THERE MUST NOT BE A SECTION CALLED ACHIEVEMENTS.
 
 Instead create:
 
@@ -862,8 +861,7 @@ The canvas must not interfere with:
 Scrolling
 Clicking
 Navigation
-Text readability
-21. COMPONENT STRUCTURE
+Text readability 21. COMPONENT STRUCTURE
 
 Keep the project modular.
 
@@ -958,34 +956,34 @@ Do not fake AI intelligence.
 Before considering the website complete, verify:
 
 Visual
- No cyberpunk appearance
- No neon
- No futuristic HUD
- No generic AI portfolio
- Dark theme feels ambient
- Light theme feels pale yellow, warm and refreshing
- Typography is strong
- Sections have different compositions
- Three.js adds actual value
+No cyberpunk appearance
+No neon
+No futuristic HUD
+No generic AI portfolio
+Dark theme feels ambient
+Light theme feels pale yellow, warm and refreshing
+Typography is strong
+Sections have different compositions
+Three.js adds actual value
 Content
- All three verified projects are present
- No fake projects
- No separate Achievements section
- Coding Journey replaces achievements
- Certificates use verified information
- Skills use verified information
- Education uses verified information
- No fake social links
+All three verified projects are present
+No fake projects
+No separate Achievements section
+Coding Journey replaces achievements
+Certificates use verified information
+Skills use verified information
+Education uses verified information
+No fake social links
 Technical
- React
- JavaScript only
- No TypeScript
- Three.js implemented
- React Three Fiber implemented
- Theme toggle works
- Responsive design works
- Mobile Three.js is optimized
- No console errors
+React
+JavaScript only
+No TypeScript
+Three.js implemented
+React Three Fiber implemented
+Theme toggle works
+Responsive design works
+Mobile Three.js is optimized
+No console errors
 FINAL INSTRUCTION
 
 Do not rush into creating generic components.

@@ -3,6 +3,7 @@ import { profile } from "../data/portfolio.js";
 import { ThemeToggle } from "./ThemeToggle.jsx";
 
 const links = [
+  { id: "top", label: "Home" },
   { id: "work", label: "Work" },
   { id: "about", label: "About" },
   { id: "skills", label: "Skills" },
@@ -49,17 +50,19 @@ export function Navbar() {
           <a
             href="#top"
             onClick={go("top")}
+            data-cursor="Home"
             className="font-mono text-sm tracking-[0.25em] text-foreground"
           >
             {profile.initials}
           </a>
 
-          <div className="hidden items-center gap-8 md:flex">
+          <div className="hidden items-center gap-7 md:flex lg:gap-8">
             {links.map((l) => (
               <a
                 key={l.id}
                 href={`#${l.id}`}
                 onClick={go(l.id)}
+                data-cursor={l.label}
                 className="link-underline text-sm text-subtle transition-colors hover:text-foreground"
               >
                 {l.label}

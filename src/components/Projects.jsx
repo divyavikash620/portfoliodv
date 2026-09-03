@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import { projects } from "../data/portfolio.js";
 import { Reveal } from "./Reveal.jsx";
 
@@ -28,6 +29,7 @@ export function Projects() {
                 <button
                   key={p.id}
                   onClick={() => setActiveId(p.id)}
+                  data-cursor="Select"
                   className="group relative shrink-0 py-3 pl-4 text-left lg:border-b lg:border-border"
                 >
                   <span
@@ -39,7 +41,9 @@ export function Projects() {
                   <span className="label block">{p.number}</span>
                   <span
                     className={`mt-1 block text-lg font-light transition-colors ${
-                      on ? "text-foreground" : "text-muted-foreground group-hover:text-subtle"
+                      on
+                        ? "text-foreground font-normal"
+                        : "text-muted-foreground group-hover:text-subtle"
                     }`}
                   >
                     {p.flat}
@@ -58,35 +62,83 @@ export function Projects() {
               {active.number}
             </span>
 
-            <div key={active.id} style={{ animation: "rise 700ms cubic-bezier(0.22,1,0.36,1) both" }}>
-              <p className="label">{active.date}</p>
-              <h3 className="mt-4 text-[clamp(2rem,6vw,4.5rem)] font-light leading-[0.95] tracking-[-0.035em] text-foreground">
-                {active.title.map((line, i) => (
-                  <span key={i} className="block">
-                    {line}
-                  </span>
-                ))}
-              </h3>
-
-              <div className="mt-10 grid gap-8 md:grid-cols-[1.2fr_1fr]">
-                <p className="max-w-xl text-base leading-relaxed text-subtle">{active.summary}</p>
-                <ul className="space-y-3 border-l border-border pl-5">
-                  {active.points.map((pt) => (
-                    <li key={pt} className="text-sm leading-relaxed text-subtle">
-                      {pt}
-                    </li>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={active.id}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <p className="label text-accent">{active.date}</p>
+                <h3 className="mt-4 text-[clamp(2rem,6vw,4.5rem)] font-light leading-[0.95] tracking-[-0.035em] text-foreground">
+                  {active.title.map((line, i) => (
+                    <span key={i} className="block">
+                      {line}
+                    </span>
                   ))}
-                </ul>
-              </div>
+                </h3>
 
-              <div className="mt-10 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-border pt-5">
-                {active.tech.map((t) => (
-                  <span key={t} className="font-mono text-[11px] tracking-wide text-muted-foreground">
-                    {t}
-                  </span>
-                ))}
-              </div>
-            </div>
+                <div className="mt-10 grid gap-8 md:grid-cols-[1.2fr_1fr]">
+                  <p className="max-w-xl text-base leading-relaxed text-subtle">{active.summary}</p>
+                  <ul className="space-y-3 border-l border-border pl-5">
+                    {active.points.map((pt) => (
+                      <li key={pt} className="text-sm leading-relaxed text-subtle">
+                        {pt}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-border pt-6">
+                  <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                    {active.tech.map((t) => (
+                      <span
+                        key={t}
+                        className="font-mono text-[11px] tracking-wide text-muted-foreground"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="flex items-center gap-4">
+                    {active.demo ? (
+                      <motion.a
+                        href={active.demo}
+                        target="_blank"
+                        rel="noreferrer"
+                        data-cursor="Preview"
+                        whileHover={{ scale: 1.04, y: -2 }}
+                        whileTap={{ scale: 0.97 }}
+                        className="group inline-flex items-center gap-2 border border-border-strong bg-foreground px-4 py-2 text-xs font-medium text-background transition-colors hover:bg-accent hover:text-accent-foreground"
+                      >
+                        <span>View Demo</span>
+                        <span className="transition-transform duration-300 group-hover:translate-x-0.5">
+                          ↗
+                        </span>
+                      </motion.a>
+                    ) : null}
+                    {active.repo ? (
+                      <motion.a
+                        href={active.repo}
+                        target="_blank"
+                        rel="noreferrer"
+                        data-cursor="Code"
+                        whileHover={{ scale: 1.04, y: -2 }}
+                        whileTap={{ scale: 0.97 }}
+                        className="group inline-flex items-center gap-2 border border-border bg-surface/80 px-4 py-2 text-xs font-light text-foreground transition-colors hover:border-border-strong hover:bg-surface-elevated"
+                      >
+                        <span>Source Code</span>
+                        <span className="text-subtle transition-transform duration-300 group-hover:translate-x-0.5 group-hover:text-foreground">
+                          ↗
+                        </span>
+                      </motion.a>
+                    ) : null}
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
       </div>

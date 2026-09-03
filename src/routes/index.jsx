@@ -8,6 +8,7 @@ import { CodingJourney } from "../components/CodingJourney.jsx";
 import { Certificates } from "../components/Certificates.jsx";
 import { Contact } from "../components/Contact.jsx";
 import { Footer } from "../components/Footer.jsx";
+import { CustomCursor } from "../components/CustomCursor.jsx";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -32,6 +33,7 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <div className="min-h-screen bg-background">
+      <CustomCursor />
       <Navbar />
       <main>
         <Hero />

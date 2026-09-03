@@ -27,9 +27,34 @@ export function Certificates() {
                     </h3>
                     <p className="mt-2 text-sm text-subtle">{c.issuer}</p>
                   </div>
-                  <span className="col-start-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground md:col-start-3">
-                    {c.meta}
-                  </span>
+                  <div className="col-start-2 flex flex-wrap items-center gap-4 pt-2 md:col-start-auto md:justify-self-end md:pt-0">
+                    <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+                      {c.meta}
+                    </span>
+                    <div className="flex items-center gap-2">
+                      {c.view ? (
+                        <a
+                          href={c.view}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="border border-border bg-surface px-3 py-1 text-xs font-light text-foreground transition-colors hover:border-border-strong hover:bg-surface-elevated"
+                        >
+                          View ↗
+                        </a>
+                      ) : null}
+                      {c.download ? (
+                        <a
+                          href={c.download}
+                          download
+                          target="_blank"
+                          rel="noreferrer"
+                          className="border border-border-strong bg-foreground px-3 py-1 text-xs font-medium text-background transition-colors hover:bg-accent hover:text-accent-foreground"
+                        >
+                          Download ↓
+                        </a>
+                      ) : null}
+                    </div>
+                  </div>
                 </div>
               </Reveal>
             ))}

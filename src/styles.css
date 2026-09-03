@@ -65,12 +65,17 @@
   --border: rgba(255, 255, 255, 0.08);
   --border-strong: rgba(255, 255, 255, 0.16);
 
-  --ambient: radial-gradient(
+  --ambient:
+    radial-gradient(
       120% 90% at 78% 8%,
       color-mix(in oklab, var(--accent) 12%, transparent) 0%,
       transparent 62%
     ),
-    radial-gradient(90% 70% at 8% 100%, color-mix(in oklab, var(--accent) 7%, transparent) 0%, transparent 60%);
+    radial-gradient(
+      90% 70% at 8% 100%,
+      color-mix(in oklab, var(--accent) 7%, transparent) 0%,
+      transparent 60%
+    );
   --grain-opacity: 0.055;
 }
 
@@ -93,7 +98,8 @@
   --border: rgba(36, 35, 29, 0.12);
   --border-strong: rgba(36, 35, 29, 0.24);
 
-  --ambient: radial-gradient(120% 90% at 80% 0%, rgba(255, 246, 190, 0.9) 0%, transparent 60%),
+  --ambient:
+    radial-gradient(120% 90% at 80% 0%, rgba(255, 246, 190, 0.9) 0%, transparent 60%),
     radial-gradient(80% 70% at 0% 100%, rgba(216, 205, 150, 0.55) 0%, transparent 62%);
   --grain-opacity: 0.04;
 }
@@ -127,6 +133,7 @@
 
 @utility grain {
   position: relative;
+
   &::after {
     content: "";
     position: absolute;
@@ -156,6 +163,7 @@
   background-repeat: no-repeat;
   background-position: 0 100%;
   transition: background-size 0.35s ease;
+
   &:hover {
     background-size: 100% 1px;
   }
@@ -166,14 +174,34 @@
     opacity: 0;
     transform: translateY(14px);
   }
+
   to {
     opacity: 1;
     transform: none;
   }
 }
 
+@keyframes floatSlow {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.float-chip {
+  animation: floatSlow 4s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  .float-chip {
+    animation: none;
   }
 }

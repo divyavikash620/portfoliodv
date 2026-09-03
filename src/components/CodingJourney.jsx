@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { motion } from "motion/react";
 import { SiGeeksforgeeks, SiGithub, SiLeetcode } from "react-icons/si";
 import { getCodingStats } from "../lib/coding.functions.js";
 import { codingHighlights, profile } from "../data/portfolio.js";
@@ -33,7 +34,7 @@ export function CodingJourney() {
   const gh = data?.github;
   const gfg = data?.gfg;
   const dash = "—";
-  const totalSolved = lc && gfg ? lc.solved + gfg.solved : lc?.solved ?? null;
+  const totalSolved = lc && gfg ? lc.solved + gfg.solved : (lc?.solved ?? null);
 
   const cards = [
     {
@@ -74,14 +75,17 @@ export function CodingJourney() {
     },
   ];
 
-  const heatDays = tab === "leetcode" ? lc?.days ?? [] : gh?.days ?? [];
+  const heatDays = tab === "leetcode" ? (lc?.days ?? []) : (gh?.days ?? []);
   const heatLabel =
     tab === "leetcode"
       ? `LeetCode submissions · last 12 months${lc ? ` · ${lc.activeDays} active days` : ""}`
       : `GitHub contributions · last 12 months${gh ? ` · ${gh.total} total` : ""}`;
 
   return (
-    <section id="coding" className="ambient-bg grain relative border-t border-border py-24 md:py-36">
+    <section
+      id="coding"
+      className="ambient-bg grain relative border-t border-border py-24 md:py-36"
+    >
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-6">
@@ -101,21 +105,28 @@ export function CodingJourney() {
         </Reveal>
 
         {/* small per-platform cards */}
-        <div className="mt-12 grid gap-3 md:grid-cols-3">
+        <div className="mt-12 grid gap-4 md:grid-cols-3">
           {cards.map((c, i) => (
             <Reveal key={c.key} delay={i * 70}>
-              <a
+              <motion.a
                 href={c.href}
                 target="_blank"
                 rel="noreferrer"
-                className="group flex h-full flex-col gap-5 border border-border bg-surface/60 px-5 py-5 transition-colors hover:border-border-strong"
+                data-cursor={c.name}
+                whileHover={{ scale: 1.025, y: -4 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 350, damping: 22 }}
+                className="group flex h-full flex-col justify-between gap-5 border border-border bg-surface/70 p-6 backdrop-blur-sm transition-colors duration-300 hover:border-accent/60 hover:bg-surface hover:shadow-[0_8px_30px_rgba(0,0,0,0.12)]"
               >
                 <div className="flex items-center justify-between gap-3">
                   <span className="flex min-w-0 items-center gap-2.5">
-                    <c.Icon aria-hidden className="h-4 w-4 shrink-0 text-accent" />
+                    <c.Icon
+                      aria-hidden
+                      className="h-4 w-4 shrink-0 text-accent transition-transform duration-300 group-hover:scale-110"
+                    />
                     <span className="truncate text-sm font-light text-foreground">{c.name}</span>
                   </span>
-                  <span className="font-mono text-[10px] text-muted-foreground transition-transform duration-300 group-hover:translate-x-0.5">
+                  <span className="font-mono text-[10px] text-muted-foreground transition-transform duration-300 group-hover:translate-x-0.5 group-hover:text-accent">
                     @{c.handle} ↗
                   </span>
                 </div>
@@ -124,7 +135,7 @@ export function CodingJourney() {
                     <Stat key={s.label} label={s.label} value={s.value} />
                   ))}
                 </div>
-              </a>
+              </motion.a>
             </Reveal>
           ))}
         </div>

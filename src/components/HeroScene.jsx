@@ -101,53 +101,122 @@ function Bot({ colors, active, reduced }) {
   const eyeL = useRef();
   const eyeR = useRef();
   const antenna = useRef();
-  const { viewport } = useThree();
+  const thrusterRing = useRef();
+  const projectorBeam = useRef();
   const posterTex = usePosterTexture(colors);
+
   const blink = useRef({ next: 2, closing: 0 });
+  const prevPointer = useRef({ x: 0, y: 0 });
+  const recoil = useRef(0);
+  const prevActive = useRef(active);
+
+  // Trigger tactile recoil pulse whenever active state toggles
+  if (prevActive.current !== active) {
+    recoil.current = active ? 0.35 : -0.2;
+    prevActive.current = active;
+  }
 
   useFrame((state, delta) => {
     const dt = Math.min(delta, 0.05);
     const t = state.clock.elapsedTime;
     const p = state.pointer;
 
-    // No rotation anywhere — the bot only drifts gently and reacts by position.
+    // Decay recoil spring
+    recoil.current += (0 - recoil.current) * (1 - Math.exp(-9 * dt));
+
+    // Pointer velocity for banking physics
+    const vx = (p.x - prevPointer.current.x) / (dt || 0.016);
+    prevPointer.current = { x: p.x, y: p.y };
+
     if (root.current) {
-      const tx = p.x * 0.22;
-      root.current.position.x += (tx - root.current.position.x) * (1 - Math.exp(-2.2 * dt));
-      const targetY = (reduced ? 0 : Math.sin(t * 1.1) * 0.05) + (active ? 0.1 : 0);
-      root.current.position.y += (targetY - root.current.position.y) * (1 - Math.exp(-3 * dt));
-      const s = active ? 1.04 : 1;
-      root.current.scale.x += (s - root.current.scale.x) * (1 - Math.exp(-3 * dt));
+      // Lateral drift & spring responsiveness
+      const tx = p.x * 0.38;
+      root.current.position.x += (tx - root.current.position.x) * (1 - Math.exp(-4 * dt));
+
+      // Drone banking roll into the turn
+      const targetRoll = reduced ? 0 : -Math.max(-0.25, Math.min(0.25, vx * 0.04));
+      root.current.rotation.z += (targetRoll - root.current.rotation.z) * (1 - Math.exp(-6 * dt));
+
+      // Floating altitude + active lift + tactile deployment recoil bounce
+      const floatY = reduced ? 0 : Math.sin(t * 1.4) * 0.05 + Math.cos(t * 2.8) * 0.015;
+      const targetY = floatY + (active ? 0.22 : 0) + recoil.current;
+      root.current.position.y += (targetY - root.current.position.y) * (1 - Math.exp(-5 * dt));
+
+      const s = (active ? 1.05 : 1) + Math.abs(recoil.current) * 0.1;
+      root.current.scale.x += (s - root.current.scale.x) * (1 - Math.exp(-5 * dt));
       root.current.scale.y = root.current.scale.z = root.current.scale.x;
     }
 
     if (head.current) {
-      head.current.position.y = 1.16 + (reduced ? 0 : Math.sin(t * 1.4) * 0.012);
+      // Organic multi-joint look-at tracking
+      head.current.position.y = 1.16 + (reduced ? 0 : Math.sin(t * 1.8) * 0.012);
+
+      // When active, nod down to project the console; otherwise follow pointer with soft damping
+      const targetRotX = active ? 0.28 : -p.y * 0.22;
+      const targetRotY = p.x * 0.38;
+      const targetRotZ = -p.x * 0.08;
+      head.current.rotation.x += (targetRotX - head.current.rotation.x) * (1 - Math.exp(-5 * dt));
+      head.current.rotation.y += (targetRotY - head.current.rotation.y) * (1 - Math.exp(-5 * dt));
+      head.current.rotation.z += (targetRotZ - head.current.rotation.z) * (1 - Math.exp(-5 * dt));
+    }
+
+    if (antenna.current) {
+      // Flexible antenna spring wobble
+      const antWobbleZ = Math.sin(t * 8) * 0.08 + -root.current.rotation.z * 1.5;
+      const antWobbleX = Math.cos(t * 7) * 0.06 - (active ? 0.2 : 0);
+      antenna.current.rotation.z +=
+        (antWobbleZ - antenna.current.rotation.z) * (1 - Math.exp(-8 * dt));
+      antenna.current.rotation.x +=
+        (antWobbleX - antenna.current.rotation.x) * (1 - Math.exp(-8 * dt));
     }
 
     if (poster.current) {
-      const lift = active ? 0.08 : 0;
-      poster.current.position.y += (0.16 + lift - poster.current.position.y) * (1 - Math.exp(-3 * dt));
+      const lift = active ? 0.12 : 0;
+      poster.current.position.y +=
+        (0.16 + lift - poster.current.position.y) * (1 - Math.exp(-4 * dt));
     }
 
     if (leftArm.current && rightArm.current) {
-      leftArm.current.rotation.z = -0.95;
-      rightArm.current.rotation.z = 0.95;
+      const armWave = active ? Math.sin(t * 4.5) * 0.1 : Math.sin(t * 1.4) * 0.03;
+      leftArm.current.rotation.z = -0.95 + armWave;
+      rightArm.current.rotation.z = 0.95 - armWave;
     }
 
-    // blinking
+    if (thrusterRing.current) {
+      const ringScale = (active ? 1.4 : 1) + Math.sin(t * 12) * 0.15;
+      thrusterRing.current.scale.x = thrusterRing.current.scale.z = ringScale;
+      thrusterRing.current.rotation.y += dt * 3;
+    }
+
+    if (projectorBeam.current) {
+      const targetOpacity = active ? 0.55 + Math.sin(t * 8) * 0.12 : 0;
+      projectorBeam.current.material.opacity +=
+        (targetOpacity - projectorBeam.current.material.opacity) * (1 - Math.exp(-7 * dt));
+    }
+
+    // Interactive blinking & pupil shifting
     const b = blink.current;
     b.next -= dt;
     if (b.next <= 0) {
-      b.closing = 0.16;
-      b.next = 2.4 + Math.random() * 3;
+      b.closing = 0.14;
+      b.next = 1.8 + Math.random() * 3.5;
     }
     const closed = b.closing > 0;
     if (closed) b.closing -= dt;
-    const sy = closed ? 0.12 : 1;
+    const sy = closed ? 0.08 : 1;
+
+    // Pupil look-at offset
+    const pupilOffsetX = p.x * 0.03;
+    const pupilOffsetY = p.y * 0.02 - (active ? 0.03 : 0);
+
     if (eyeL.current && eyeR.current) {
-      eyeL.current.scale.y += (sy - eyeL.current.scale.y) * (1 - Math.exp(-22 * dt));
+      eyeL.current.scale.y += (sy - eyeL.current.scale.y) * (1 - Math.exp(-26 * dt));
       eyeR.current.scale.y = eyeL.current.scale.y;
+
+      eyeL.current.position.x = -0.17 + pupilOffsetX;
+      eyeR.current.position.x = 0.17 + pupilOffsetX;
+      eyeL.current.position.y = 0.04 + pupilOffsetY;
+      eyeR.current.position.y = 0.04 + pupilOffsetY;
     }
   });
 
@@ -161,7 +230,12 @@ function Bot({ colors, active, reduced }) {
       <group ref={poster} position={[0, 0.16, 0.78]}>
         <mesh position={[0, 2.42, 0]}>
           <planeGeometry args={[2.4, 1.5]} />
-          <meshStandardMaterial map={posterTex} roughness={0.85} metalness={0} side={THREE.DoubleSide} />
+          <meshStandardMaterial
+            map={posterTex}
+            roughness={0.85}
+            metalness={0}
+            side={THREE.DoubleSide}
+          />
         </mesh>
         <mesh position={[0, 2.42, -0.03]}>
           <boxGeometry args={[2.5, 1.6, 0.05]} />
@@ -193,8 +267,8 @@ function Bot({ colors, active, reduced }) {
             <meshStandardMaterial
               color={colors.eye}
               emissive={colors.eye}
-              emissiveIntensity={active ? 2.2 : 1.2}
-              roughness={0.3}
+              emissiveIntensity={active ? 3.0 : 1.2}
+              roughness={0.2}
             />
           </mesh>
         ))}
@@ -216,8 +290,8 @@ function Bot({ colors, active, reduced }) {
             <meshStandardMaterial
               color={colors.accent}
               emissive={colors.accent}
-              emissiveIntensity={active ? 1.8 : 0.9}
-              roughness={0.3}
+              emissiveIntensity={active ? 2.5 : 0.9}
+              roughness={0.2}
             />
           </mesh>
         </group>
@@ -230,7 +304,13 @@ function Bot({ colors, active, reduced }) {
       </mesh>
 
       {/* body */}
-      <RoundedBox args={[1.0, 1.05, 0.78]} radius={0.3} smoothness={5} position={[0, 0.12, 0]} castShadow>
+      <RoundedBox
+        args={[1.0, 1.05, 0.78]}
+        radius={0.3}
+        smoothness={5}
+        position={[0, 0.12, 0]}
+        castShadow
+      >
         {shell()}
       </RoundedBox>
       <mesh position={[0, 0.2, 0.4]}>
@@ -240,7 +320,11 @@ function Bot({ colors, active, reduced }) {
       </mesh>
       <mesh position={[0, 0.2, 0.44]}>
         <torusGeometry args={[0.1, 0.012, 10, 32]} />
-        <meshStandardMaterial color={colors.accent} emissive={colors.accent} emissiveIntensity={0.8} />
+        <meshStandardMaterial
+          color={colors.accent}
+          emissive={colors.accent}
+          emissiveIntensity={active ? 1.6 : 0.8}
+        />
       </mesh>
 
       {/* arms raised to hold the poster */}
@@ -270,10 +354,36 @@ function Bot({ colors, active, reduced }) {
         <meshStandardMaterial
           color={colors.accent}
           transparent
-          opacity={0.35}
+          opacity={active ? 0.6 : 0.35}
           emissive={colors.accent}
-          emissiveIntensity={active ? 1.2 : 0.6}
+          emissiveIntensity={active ? 2.0 : 0.6}
           side={THREE.DoubleSide}
+        />
+      </mesh>
+
+      {/* Thruster energy ring */}
+      <mesh ref={thrusterRing} position={[0, -0.74, 0]} rotation={[Math.PI / 2, 0, 0]}>
+        <torusGeometry args={[0.26, 0.02, 16, 32]} />
+        <meshStandardMaterial
+          color={colors.accent}
+          transparent
+          opacity={active ? 0.9 : 0.45}
+          emissive={colors.accent}
+          emissiveIntensity={active ? 2.4 : 0.8}
+        />
+      </mesh>
+
+      {/* Holographic Projection Beam (pointing downwards towards the deployed panel) */}
+      <mesh ref={projectorBeam} position={[0, -1.2, 0.3]} rotation={[0.2, 0, 0]}>
+        <cylinderGeometry args={[0.1, 1.4, 1.4, 24, 1, true]} />
+        <meshStandardMaterial
+          color={colors.accent}
+          transparent
+          opacity={0}
+          emissive={colors.accent}
+          emissiveIntensity={1.2}
+          side={THREE.DoubleSide}
+          depthWrite={false}
         />
       </mesh>
     </group>

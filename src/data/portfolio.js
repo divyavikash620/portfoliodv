@@ -2,9 +2,9 @@ export const profile = {
   name: "Divya Vikash",
   initials: "DV",
   role: "Computer Science Student",
+  avatar: "/profile.png",
   school: "Lovely Professional University",
-  statement:
-    "I like understanding how things work beneath the surface — so I learn by building.",
+  statement: "I like understanding how things work beneath the surface — so I learn by building.",
   email: "divyavikash620@gmail.com",
   phone: "+91 93152 92325",
   phoneHref: "tel:+919315292325",
@@ -113,14 +113,44 @@ export const education = [
 ];
 
 export const skills = [
-  { name: "C++", icon: "cplusplus", group: "Languages", note: "Powers MiniDB — its typed rows and schema engine." },
-  { name: "C", icon: "c", group: "Languages", note: "Where data structures and algorithms were learned first." },
-  { name: "Java", icon: "java", group: "Languages", note: "Used to build the Student Management System." },
-  { name: "JavaScript", icon: "javascript", group: "Languages", note: "The language behind WDTE's analysis interface." },
-  { name: "Python", icon: "python", group: "Languages", note: "Scripting and quick problem solving." },
+  {
+    name: "C++",
+    icon: "cplusplus",
+    group: "Languages",
+    note: "Powers MiniDB — its typed rows and schema engine.",
+  },
+  {
+    name: "C",
+    icon: "c",
+    group: "Languages",
+    note: "Where data structures and algorithms were learned first.",
+  },
+  {
+    name: "Java",
+    icon: "java",
+    group: "Languages",
+    note: "Used to build the Student Management System.",
+  },
+  {
+    name: "JavaScript",
+    icon: "javascript",
+    group: "Languages",
+    note: "The language behind WDTE's analysis interface.",
+  },
+  {
+    name: "Python",
+    icon: "python",
+    group: "Languages",
+    note: "Scripting and quick problem solving.",
+  },
   { name: "HTML", icon: "html", group: "Web", note: "Structure for WDTE and the web work." },
   { name: "CSS", icon: "css", group: "Web", note: "Responsive dark / light theming in WDTE." },
-  { name: "PostgreSQL", icon: "postgresql", group: "Data", note: "Relational thinking that fed into MiniDB." },
+  {
+    name: "PostgreSQL",
+    icon: "postgresql",
+    group: "Data",
+    note: "Relational thinking that fed into MiniDB.",
+  },
   { name: "MongoDB", icon: "mongodb", group: "Data", note: "Document-oriented storage." },
   { name: "Git", icon: "git", group: "Tooling", note: "Version control across every project." },
   { name: "GitHub", icon: "github", group: "Tooling", note: "Where the projects live." },
