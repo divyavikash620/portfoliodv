@@ -219,7 +219,7 @@ export function Hero() {
                     {/* Profile Image with centered face framing */}
                     <div className="absolute inset-0 z-0 overflow-hidden bg-deep">
                       <img
-                        src="/profile.png"
+                        src={profile.avatar}
                         alt="Divya Vikash — Computer Science Student"
                         style={{ objectPosition: "50% 68%" }}
                         className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"

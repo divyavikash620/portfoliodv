@@ -2,7 +2,7 @@ export const profile = {
   name: "Divya Vikash",
   initials: "DV",
   role: "Computer Science Student",
-  avatar: "/profile.png",
+  avatar: `${import.meta.env.BASE_URL}profile.png`,
   school: "Lovely Professional University",
   statement: "I like understanding how things work beneath the surface — so I learn by building.",
   email: "divyavikash620@gmail.com",
